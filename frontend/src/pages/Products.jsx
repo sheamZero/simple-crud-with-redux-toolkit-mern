@@ -1,35 +1,19 @@
+import { useEffect } from "react";
 import ProductCard from "../components/ProductCard";
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from "../features/products/productsSlice";
 
 const Products = () => {
-    const products = [
-        {
-            _id: 1,
-            title: "Portable Bluetooth Speaker",
-            description:
-                "Compact portable speaker with deep bass and waterproof design.",
-            price: 45.5,
-            countInStock: 20,
-            imageUrl: "https://i.ibb.co.com/dwJFBpZB/keyboard.jpg",
-        },
-        {
-            _id: 2,
-            title: "Gaming Mechanical Keyboard",
-            description:
-                "RGB mechanical keyboard with customizable lighting effects.",
-            price: 89.99,
-            countInStock: 12,
-            imageUrl: "https://i.ibb.co.com/bMWJjZ8b/speaker.jpg",
-        },
-        {
-            id: 3,
-            title: "Wireless Headphones",
-            description:
-                "Noise cancelling wireless headphones with premium sound quality.",
-            price: 120,
-            countInStock: 8,
-            imageUrl: "https://i.ibb.co.com/dwJFBpZB/keyboard.jpg",
-        },
-    ];
+    const dispatch = useDispatch();
+    const { products, isLoading } = useSelector((state) => state.products);
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    if (isLoading) {
+        return <p>loading...</p>
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 py-10 px-4">
@@ -47,7 +31,7 @@ const Products = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {products.map((product) => (
                         <ProductCard
-                            key={product.id}
+                            key={product._id}
                             product={product}
                         />
                     ))}

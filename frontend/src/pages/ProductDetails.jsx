@@ -1,24 +1,29 @@
 import { useParams } from "react-router-dom";
 import { ShoppingCart, ShieldCheck, Truck } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProductById } from "../features/products/productsSlice";
 
 const ProductDetails = () => {
     const { id } = useParams();
+    const { product, isLoading } = useSelector((state) => state.products);
+    const dispatch = useDispatch();
 
-    const product = {
-        _id: 1,
-        title: "Portable Bluetooth Speaker",
-        description:
-            "Compact portable speaker with deep bass and waterproof design. Enjoy premium sound quality anywhere with long-lasting battery backup and sleek modern design.",
-        price: 45.5,
-        countInStock: 20,
-        imageUrl: "https://i.ibb.co.com/dwJFBpZB/keyboard.jpg",
-    };
+    console.log(product);
+
+    useEffect(() => {
+        dispatch(fetchProductById(id))
+    }, [dispatch, id]);
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 py-10 px-4 md:px-10">
-            
+
             <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-10 p-6 md:p-10">
-                
+
                 {/* Left Side */}
                 <div className="bg-gray-100 rounded-3xl overflow-hidden flex items-center justify-center p-6">
                     <img
@@ -54,10 +59,10 @@ const ProductDetails = () => {
                     <div className="mt-5 flex flex-col sm:flex-row items-center gap-4">
                         <span className="font-bold text-2xl text-gray-700">Quantity:</span>
                         <select className="border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-lime-400 text-gray-700 font-medium">
-                           
+
                             {[...Array(product.countInStock).keys()].map((x) => (
                                 <option key={x + 1} value={x + 1}>
-                                     {x + 1}
+                                    {x + 1}
                                 </option>
                             ))}
                         </select>
