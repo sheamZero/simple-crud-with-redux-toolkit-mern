@@ -28,11 +28,11 @@ const ProductCard = ({ product }) => {
 
                 {/* Price & Stock */}
                 <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-2xl font-bold text-indigo-600">
+                    <h2 className="text-2xl font-bold text-lime-600">
                         ${product.price.toFixed(2)}
                     </h2>
 
-                    <span className="bg-indigo-100 text-indigo-600 text-sm font-semibold px-4 py-1.5 rounded-full">
+                    <span className="bg-lime-50 text-lime-600 text-sm font-semibold px-4 py-1.5 rounded-full">
                         Stock: {product.countInStock}
                     </span>
                 </div>
@@ -41,7 +41,7 @@ const ProductCard = ({ product }) => {
             
             <Link
                 to={`/products/${product._id}`}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white py-3 rounded-xl transition-all duration-300 text-center cursor-pointer font-medium shadow-sm mt-auto"
+                className="w-full bg-lime-600 hover:bg-lime-700 active:scale-[0.98] text-white py-3 rounded-xl transition-all duration-300 text-center cursor-pointer font-medium shadow-sm mt-auto"
             >
                 View Details
             </Link>

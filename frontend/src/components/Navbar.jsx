@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MenuIcon, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import MenuSidebar from "./MenuSidebar";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    console.log(isMenuOpen);
+    const navigate = useNavigate();
 
     return (
         <>
@@ -21,7 +21,7 @@ const Navbar = () => {
                         <Link className="text-base font-medium hover:text-lime-600" to="/products">Products</Link>
                     </div>
 
-                    <div className="relative text-2xl cursor-pointer">
+                    <div onClick={() => navigate("/carts")} className="relative text-2xl cursor-pointer">
                         <ShoppingCart />
                         <span className="absolute -top-2.5 -right-2.5 bg-lime-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
                     </div>
