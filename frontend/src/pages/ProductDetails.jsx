@@ -3,19 +3,27 @@ import { ShoppingCart, ShieldCheck, Truck } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchProductById } from "../features/products/productsSlice";
+import { addCartItemInDB } from "../features/carts/cartsSlice";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const { product, isLoading } = useSelector((state) => state.products);
     const dispatch = useDispatch();
 
-    console.log(product);
+    // console.log(product);
+
+    const handleAddToCart = (product) => {
+        console.log("Adding to cart: ", product);
+dispatch(addCartItemInDB(product))
+
+    }
+
 
     useEffect(() => {
         dispatch(fetchProductById(id))
     }, [dispatch, id]);
 
-    if (isLoading) {
+    if (isLoading || !product) {
         return <p>Loading...</p>
     }
 
@@ -27,8 +35,8 @@ const ProductDetails = () => {
                 {/* Left Side */}
                 <div className="bg-gray-100 rounded-3xl overflow-hidden flex items-center justify-center p-6">
                     <img
-                        src={product.imageUrl}
-                        alt={product.title}
+                        src={product?.imageUrl}
+                        alt={product?.title}
                         className="w-full max-w-md object-cover rounded-2xl hover:scale-105 transition duration-300"
                     />
                 </div>
@@ -67,7 +75,9 @@ const ProductDetails = () => {
                             ))}
                         </select>
 
-                        <button className="flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-600 active:scale-[0.98] transition-all duration-300 text-white font-semibold px-8 py-3 rounded-xl shadow-md">
+                        <button
+                            onClick={() => handleAddToCart(product)}
+                            className="flex items-center justify-center gap-2 bg-lime-500 hover:bg-lime-600 active:scale-[0.98] transition-all duration-300 text-white font-semibold px-8 py-3 rounded-xl shadow-md">
                             <ShoppingCart size={20} />
                             Add To Cart
                         </button>

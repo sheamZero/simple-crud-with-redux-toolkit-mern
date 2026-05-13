@@ -15,7 +15,8 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductById = createAsyncThunk(
     "products/fetchProductById",
     async (id) => {
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+        // console.log(id)
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/${id}`);
         return res.data;
     }
 );
@@ -44,10 +45,10 @@ const productsSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchProducts.rejected, (state, action) => {
-                state.products = [],
-                    state.isLoading = false,
-                    state.isError = true,
-                    state.error = action.error
+                state.products = [];
+                state.isLoading = false;
+                state.isError = true;
+                state.error = action.error
             })
 
             // for single product
@@ -55,16 +56,18 @@ const productsSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(fetchProductById.fulfilled, (state, action) => {
-                state.product = action.payload,
-                    state.isLoading = false,
-                    state.isError = false,
-                    state.error = null
+                // console.log("from extra reducer", action.payload)
+                state.product = action.payload;
+                state.isLoading = false;
+                state.isError = false;
+                state.error = null;
             })
             .addCase(fetchProductById.rejected, (state, action) => {
-                state.product = null,
-                    state.isLoading = false,
-                    state.isError = true,
-                    state.error = action.error
+                state.product = null;
+                state.isLoading = false;
+                state.isError = true;
+                state.error = action.error;
+                console.log("Error fetching product by ID: ", action.error);
             })
 
 
